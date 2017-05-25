@@ -490,3 +490,4 @@ def thirty_menu():
 def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
+
