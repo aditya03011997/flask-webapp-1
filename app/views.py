@@ -170,12 +170,14 @@ def interests():
     form = SimpleForm()
     if 'email' not in session:
         return redirect(url_for('signin'))
-   
-    elif form.validate==False:
-         return render_template('that_form_jo_banaa_nahi.html',form=form)
+    
     else:
-        db.session.add(userinterests)
-        db.session.commit()
+   
+         if form.validate==False:
+            return render_template('that_form_jo_banaa_nahi.html',form=form)
+        else:
+            db.session.add(userinterests)
+            db.session.commit()
         
         
 
