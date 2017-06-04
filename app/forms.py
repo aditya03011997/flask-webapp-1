@@ -63,6 +63,19 @@ class PostForm(Form):
             return False
         return True
 
+    
+    
+class Categorychoiceform(Form):
+    selected_ones=[('Technology','Technology'),('Business & Finance', 'Business & Finance'),('Lifehacks','Lifehacks'),('Softskills','Softskills'),('DS & Algo','DS & Algo'),('Machine Learning & AI','Machine Learning & AI')]
+    choices = SelectField(label='Category', choices=[selected_ones], coerce=str)
+    submit = SubmitField("Post")
+    
+    def validate(self):
+        if not Form.validate(self):
+            return False
+        return True
+        
+
 class RecoveryForm(Form):
     email = StringField("Email", [validators.Required("Please enter your email address.")])
     submit = SubmitField("Send Mail")
