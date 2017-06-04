@@ -491,3 +491,14 @@ def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
 
+@page.route('/choosingtopics',methods=['POST])
+def validate_choices():
+    posts=Post.query.filter_by(choices = selected_ones.all()
+    return render_template()
+    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
+    form = Categorychoiceform(request.form)
+    form.choices.selected_ones = categories
+                               
+
+    
+
