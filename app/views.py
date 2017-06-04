@@ -172,12 +172,14 @@ def interests():
         return redirect(url_for('signin'))
     
     else:
-   
-         if form.validate==False:
+         if request.method == 'POST':
+            if form.validate==False:
+                return render_template('that_form_jo_banaa_nahi.html',form=form)
+            else:
+                db.session.add(userinterests)
+                db.session.commit()                        
+         else:                        
             return render_template('that_form_jo_banaa_nahi.html',form=form)
-        else:
-            db.session.add(userinterests)
-            db.session.commit()
         
         
 
