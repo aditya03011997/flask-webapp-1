@@ -168,11 +168,16 @@ def login(username,pwd_hash):
 @page.route('/interestform',methods=['GET','POST'])
 def interests():
     form = SimpleForm()
-    if form.validate_on_submit():
-        print form.example.data
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+   
+    elif form.validate==False:
+         return render_template('that_form_jo_banaa_nahi.html',form=form)
     else:
-        print form.errors
-    return render_template('that_form_jo_banaa_nahi.html',form=form)
+        db.session.add(userinterests)
+        db.session.commit()
+        
+        
 
 @page.route('/signout')
 def signout():
