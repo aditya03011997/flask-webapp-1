@@ -137,3 +137,4 @@ class ChangePasswordForm(Form):
         else:
             self.old_password.errors.append("Wrong password")
             return False
+        
