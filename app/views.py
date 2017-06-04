@@ -144,17 +144,24 @@ def signin():
     elif request.method == 'GET':
         return render_template('signin.html', title="Sign In", form=form)
     
-@page.route('/api/v2/users', methods = ['POST'])
-def nayaa_user():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    if username is None or password is None:
-        abort(400) # missing arguments
-    if User.query.filter_by(username = username).first() is not None:
-        abort(400) # existing user
-    user = User(username = username)
-    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}    
+@page.route('/api/v2/register/<username>/<pwd_hash>', methods = ['POST'])
+    def nayaa_user(username, pwd_hash):    
+        if User.query.filter_by(username = username).first() is not None:
+            abort(400) # existing user
+        user = User(username = username)
+        return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)} 
 
+@app.route('/api/login_hua'/<username>/<pwd_hash>', methods=['POST'])
+def login():
+    json_data = request.json
+    user = User.query.filter_by(email=json_data['email']).first()
+    if user and check_password_hash(
+            user.password, json_data['password']):
+        session['logged_in'] = True
+        status = True
+    else:
+        status = False
+    return jsonify({'result': status})
 @page.route('/signout')
 def signout():
     if 'email' not in session:
