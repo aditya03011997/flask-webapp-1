@@ -144,20 +144,22 @@ def signin():
     elif request.method == 'GET':
         return render_template('signin.html', title="Sign In", form=form)
     
-@page.route('/api/v2/register/<username>/<pwd_hash>', methods = ['POST'])
-    def nayaa_user(username, pwd_hash):    
+@page.route('/api/v2/register/<username>/<email>/<passwd>', methods = ['POST'])
+    def nayaa_user(username, email, passwd):    
         if User.query.filter_by(username = username).first() is not None:
             abort(400) # existing user
-        user = User(username = username)
+        newuser = User(username, email, passwd)
+        db.session.add(newuser)
+        db.session.commit()
+        db.session.add(newuser.follow(newuser))
+        db.session.commit()
+        newuser.make_dirs()
         return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)} 
 
 @app.route('/api/login_hua/<username>/<pwd_hash>', methods=['POST'])
 def login(username,pwd_hash):
-    json_data = request.json
-    user = User.query.filter_by(email=json_data['email']).first()
-    if user and check pwd_hash(
-            user.password, json_data['password']):
-        session['logged_in'] = True
+    user = User.query.filter_by(username=username).first()
+    if user and user.check_pwd_hash(user.password, pwd_hash):
         status = True
     else:
         status = False
@@ -513,12 +515,7 @@ def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
 
-@page.route('/choosingtopics',methods=['POST])
+@page.route('/choosingtopics',methods=['POST'])
 def validate_choices():
     posts=Post.query.filter_by(choices = selected_ones.all()
     return render_template()
-    
-                               
-
-    
-
