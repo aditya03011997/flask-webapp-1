@@ -1,4 +1,4 @@
-from flask import make_response, url_for, request, render_template, flash, session, redirect,session
+from flask import make_response, url_for, request, render_template, flash, session, redirect,session,jsonify
 from flask_oauth import OAuth
 from .forms import ChangeNickForm, ChangePasswordForm, SearchForm, SignupForm, SigninForm, PostForm, RecoveryForm, NewpasswordForm
 from app import authomatic, page, db, models
