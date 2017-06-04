@@ -517,9 +517,7 @@ def imenu():
 def validate_choices():
     posts=Post.query.filter_by(choices = selected_ones.all()
     return render_template()
-    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
-    form = Categorychoiceform(request.form)
-    form.choices.selected_ones = categories
+    
                                
 
     
