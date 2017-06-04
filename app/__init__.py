@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_restless import APIManager
 from flask_migrate import Migrate
 from flask_whooshee import Whooshee
 from authomatic import Authomatic
@@ -26,5 +27,14 @@ db = SQLAlchemy(page)
 migrate = Migrate(page, db)
 
 whooshee = Whooshee(page)
+api_manager = APIManager(page, flask_sqlalchemy_db=db)
+manager.init_app(page)
 
+includes=['follow','unfollow','is_following','has_liked','has_bookmarked','set_password','check_password','make_dirs','avatar']
+  
+api.manager.create_api(User,url_prefix='api/v2',include_columns=['id','nickname','email','posts','flwrs','followed'],primary_key='nickname', methods=['GET', 'POST'],include_methods='includes',app= page,results_per_page=3)
+api.manager.create_api(Post,url_prefix='api/v2',primary_key='title',methods=['GET', 'POST','DELETE'] , app=page,results_per_page=3,include_methods='_repr_')
+api.manager.create_api(Like,url_prefix='api/v2',primary_key='post id',methods=['GET','POST','DELETE'],app=page,results_per_page=3,include_methods='_repr_')
+api.manager.create_api(Bookmark,url_prefix='api/v2',primary_key='post_id',methods=['GET','POST','DELETE'],app=page,results_per_page=3,include_methods='_repr_')
+ 
 from app import views, models
