@@ -151,11 +151,11 @@ def signin():
         user = User(username = username)
         return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)} 
 
-@app.route('/api/login_hua'/<username>/<pwd_hash>', methods=['POST'])
-def login():
+@app.route('/api/login_hua/<username>/<pwd_hash>', methods=['POST'])
+def login(username,pwd_hash):
     json_data = request.json
     user = User.query.filter_by(email=json_data['email']).first()
-    if user and check_password_hash(
+    if user and check pwd_hash(
             user.password, json_data['password']):
         session['logged_in'] = True
         status = True
