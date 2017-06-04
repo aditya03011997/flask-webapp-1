@@ -120,5 +120,7 @@ class Bookmark(db.Model):
 
     def __repr__(self):
         return '%s, %s' %(self.post_id, self.user_id)
+    
+    
 
     
