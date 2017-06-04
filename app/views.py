@@ -1,5 +1,4 @@
 from flask import make_response, url_for, request, render_template, flash, session, redirect,session
-from flask_oauth import OAuth
 from .forms import ChangeNickForm, ChangePasswordForm, SearchForm, SignupForm, SigninForm, PostForm, RecoveryForm, NewpasswordForm
 from app import authomatic, page, db, models
 from .models import Bookmark, User, Post, Like
@@ -495,13 +494,13 @@ def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
 
-@page.route('/choosingtopics',methods=['POST])
-def validate_choices():
-    posts=Post.query.filter_by(choices = selected_ones.all()
-    return render_template()
-    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
-    form = Categorychoiceform(request.form)
-    form.choices.selected_ones = categories
+#@page.route('/choosingtopics',methods=['POST'])
+#def validate_choices():
+#    posts=Post.query.filter_by(choices = selected_ones.all()
+#    return render_template()
+#    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
+#    form = Categorychoiceform(request.form)
+#    form.choices.selected_ones = categories
                                
 
     

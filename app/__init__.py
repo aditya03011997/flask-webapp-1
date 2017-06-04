@@ -28,14 +28,14 @@ db = SQLAlchemy(page)
 migrate = Migrate(page, db)
 
 whooshee = Whooshee(page)
-api_manager = APIManager(page, flask_sqlalchemy_db=db)
-manager.init_app(page)
+manager = APIManager(page, flask_sqlalchemy_db=db)
+#manager.init_app(page)
 
 includes=['follow','unfollow','is_following','has_liked','has_bookmarked','set_password','check_password','make_dirs','avatar']
-  
-api.manager.create_api(User,url_prefix='api/v2',include_columns=['id','nickname','email','posts','flwrs','followed'],primary_key='nickname', methods=['GET', 'POST'],include_methods='includes',app= page,results_per_page=3)
-api.manager.create_api(Post,url_prefix='api/v2',primary_key='title',methods=['GET', 'POST','DELETE'] , app=page,results_per_page=3,include_methods='_repr_')
-api.manager.create_api(Like,url_prefix='api/v2',primary_key='post id',methods=['GET','POST','DELETE'],app=page,results_per_page=3,include_methods='_repr_')
-api.manager.create_api(Bookmark,url_prefix='api/v2',primary_key='post_id',methods=['GET','POST','DELETE'],app=page,results_per_page=3,include_methods='_repr_')
- 
+
 from app import views, models
+
+manager.create_api(models.User,url_prefix='/api/v2',include_columns=['id','nickname','email','posts','flwrs','followed'],primary_key='id', methods=['GET', 'POST'],include_methods='includes',results_per_page=3)
+manager.create_api(models.Post,url_prefix='/api/v2',primary_key='title',methods=['GET', 'POST','DELETE'] , results_per_page=3,include_methods='_repr_')
+manager.create_api(models.Like,url_prefix='/api/v2',primary_key='post id',methods=['GET','POST','DELETE'],results_per_page=3,include_methods='_repr_')
+manager.create_api(models.Bookmark,url_prefix='/api/v2',primary_key='post_id',methods=['GET','POST','DELETE'],results_per_page=3,include_methods='_repr_')
