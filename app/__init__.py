@@ -1,12 +1,36 @@
-from flask import Flask
+from flask import Flask,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_restless import APIManager
 from flask_migrate import Migrate
 from flask_whooshee import Whooshee
 from authomatic import Authomatic
 from authomatic.providers import oauth2
+from flask_ouath import OAuth
+
+# We must configure these 3 values from Google APIs console
+# https://code.google.com/apis/console
+GOOGLE_CLIENT_ID = '985983038574-uevth6gnpbaa5r1vpigak0o4i5oiki23.apps.googleusercontent.com'  # We put our Client-Id here. 
+GOOGLE_CLIENT_SECRET = 'iC7DTnvR_ZtLh9EtJggG8Ims'  # We put our Client-Secret here.
+REDIRECT_URI = '/oauth2callback'  # one of the Redirect URIs from Google APIs console
+
+SECRET_KEY = 'development key'
+DEBUG = True
 
 page = Flask(__name__, static_url_path='/static')
+oauth = OAuth()
+google = oauth.remote_app('google',
+                          base_url='https://www.google.com/accounts/',
+                          authorize_url='https://accounts.google.com/o/oauth2/auth',
+                          request_token_url=None,
+                          request_token_params={'scope': 'https://www.googleapis.com/auth/userinfo.email',
+                                                'response_type': 'code'},
+                          access_token_url='https://accounts.google.com/o/oauth2/token',
+                          access_token_method='POST',
+                          access_token_params={'grant_type': 'authorization_code'},
+                          consumer_key=GOOGLE_CLIENT_ID,
+                          consumer_secret=GOOGLE_CLIENT_SECRET)
+
+
 page.config.from_object('config')
 
 UPLOAD_FOLDER = '/home/manan/Programs/EduTech/app/static/userdata/'
