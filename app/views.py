@@ -1,4 +1,5 @@
 from flask import make_response, url_for, request, render_template, flash, session, redirect,session
+from flask_oauth import OAuth
 from .forms import ChangeNickForm, ChangePasswordForm, SearchForm, SignupForm, SigninForm, PostForm, RecoveryForm, NewpasswordForm
 from app import authomatic, page, db, models
 from .models import Bookmark, User, Post, Like
@@ -142,6 +143,17 @@ def signin():
 
     elif request.method == 'GET':
         return render_template('signin.html', title="Sign In", form=form)
+    
+@page.route('/api/v2/users', methods = ['POST'])
+def nayaa_user():
+    username = request.json.get('username')
+    password = request.json.get('password')
+    if username is None or password is None:
+        abort(400) # missing arguments
+    if User.query.filter_by(username = username).first() is not None:
+        abort(400) # existing user
+    user = User(username = username)
+    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)}    
 
 @page.route('/signout')
 def signout():
@@ -494,13 +506,13 @@ def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
 
-#@page.route('/choosingtopics',methods=['POST'])
-#def validate_choices():
-#    posts=Post.query.filter_by(choices = selected_ones.all()
-#    return render_template()
-#    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
-#    form = Categorychoiceform(request.form)
-#    form.choices.selected_ones = categories
+@page.route('/choosingtopics',methods=['POST])
+def validate_choices():
+    posts=Post.query.filter_by(choices = selected_ones.all()
+    return render_template()
+    categories=[(c.id,c.name)for c in user.categories.order_by(Category.name).all()]
+    form = Categorychoiceform(request.form)
+    form.choices.selected_ones = categories
                                
 
     
