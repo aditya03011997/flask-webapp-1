@@ -1,5 +1,5 @@
 from wtforms import SelectField, SubmitField, StringField, validators, PasswordField
-from flask_wtf import Form
+from flask_wtf import Form,widgets,SelectMultipleField
 from .models import User 
 from flask import flash, session
 import re
@@ -51,6 +51,18 @@ class SigninForm(Form):
         else:
             self.password.errors.append("Invalud e-mail or password")
             return False
+
+class MulticheckboxField(Select):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+    
+class SimpleForm(Form):
+    string_of_files = ['Technology\r\nBusiness & Finance \r\n Lifehacks\r\n Softskills\r\n DS & Algo\r\n Machine Learning & AI']
+    list_of_files = string_of_files[0].split()
+    # So here we are creating a list of value/description tuples.
+    files = [(x, x) for x in list_of_files]
+    example = MultiCheckboxField('Label', choices=files)
+    submit = SubmitField("Post")
 
 class PostForm(Form):
     body = StringField("Body", [validators.Required("Body cannot be empty")])
