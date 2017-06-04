@@ -164,6 +164,16 @@ def login(username,pwd_hash):
     else:
         status = False
     return jsonify({'result': status})
+
+@page.route('/interestform',methods=['GET','POST'])
+def interests():
+    form = SimpleForm()
+    if form.validate_on_submit():
+        print form.example.data
+    else:
+        print form.errors
+    return render_template('that_form_jo_banaa_nahi.html',form=form)
+
 @page.route('/signout')
 def signout():
     if 'email' not in session:
