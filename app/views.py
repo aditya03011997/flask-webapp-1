@@ -534,7 +534,9 @@ def imenu():
     posts = Post.query.filter_by(category = "Long").all()
     return render_template('menus.html', title="Time is no Barrier")
 
-@page.route('/choosingtopics',methods=['POST'])
+@page.route('/yourinterests',methods=['GET','POST'])
 def validate_choices():
-    posts=Post.query.filter_by(choices = selected_ones.all()
-    return render_template()
+    multiselect = request.form.getlist('mymultiselect')
+    posts=Post.query.filter_by(multiselect)
+    
+    
