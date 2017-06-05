@@ -536,7 +536,10 @@ def imenu():
 
 @page.route('/yourinterests',methods=['GET','POST'])
 def validate_choices():
-    multiselect = request.form.getlist('mymultiselect')
-    posts=Post.query.filter_by(multiselect)
+    if 'email' not in session:
+        return redirect(url_for('signin'))
+    else:
+        multiselect = request.form.getlist('mymultiselect')
+        posts=Post.query.filter_by(multiselect)
     
     
