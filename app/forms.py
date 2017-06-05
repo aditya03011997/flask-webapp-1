@@ -1,5 +1,5 @@
 from wtforms import SelectField, SubmitField, StringField, validators, PasswordField
-from flask_wtf import Form,SelectMultipleField
+from flask_wtf import Form
 from .models import User 
 from flask import flash, session
 import re
