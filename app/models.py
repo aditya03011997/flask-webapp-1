@@ -94,6 +94,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime)
     likes = db.Column(db.Integer)
     category = db.Column(db.String(140)) 
+    sub_category = db.Column(db.String(140))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
