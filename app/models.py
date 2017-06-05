@@ -14,6 +14,7 @@ class User(db.Model):
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     pwdhash = db.Column(db.String(54))
+    interests = db.Column(db.String(200), index=True)
     activation_status = db.Column(db.Boolean, index=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     flwrs = db.Column(db.Integer, index=True)
@@ -31,6 +32,7 @@ class User(db.Model):
         self.set_password(password)
         self.activation_status = False
         self.flwrs = -1
+        self.interests = ''
 
     def follow(self, user):
         if not self.is_following(user):

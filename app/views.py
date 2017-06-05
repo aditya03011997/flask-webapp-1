@@ -165,24 +165,6 @@ def login(username,pwd_hash):
         status = False
     return jsonify({'result': status})
 
-@page.route('/interestform',methods=['GET','POST'])
-def interests():
-    form = SimpleForm()
-    if 'email' not in session:
-        return redirect(url_for('signin'))
-    
-    else:
-         if request.method == 'POST':
-            if form.validate==False:
-                return render_template('that_form_jo_banaa_nahi.html',form=form)
-            else:
-                db.session.add(userinterests)
-                db.session.commit()                        
-         else:                        
-            return render_template('that_form_jo_banaa_nahi.html',form=form)
-        
-        
-
 @page.route('/signout')
 def signout():
     if 'email' not in session:
@@ -539,7 +521,12 @@ def validate_choices():
     if 'email' not in session:
         return redirect(url_for('signin'))
     else:
-        multiselect = request.form.getlist('mymultiselect')
-        posts=Post.query.filter_by(multiselect)
-    
-    
+        if request.method == 'POST':
+            multiselect = request.form.getlist('mymultiselect')
+            multiselect_str =' '.join(multiselect)
+            user = User.query.filter_by(nickname = session['nick']).first()
+            user.interests = multiselect_str
+            db.session.commit()
+            return redirect(url_for('profile', nick=session['nick']))
+        elif request.method == 'GET':
+            return render_template('that_form_jo_banaa_nahi', form=form)
