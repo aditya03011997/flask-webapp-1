@@ -499,7 +499,20 @@ def internal_error(e):
 @page.route('/5menu')
 def five_menu():
     posts = Post.query.filter_by(category = "5 Minutes").all()
-    return render_template('menus.html', title="5 Minutes", posts=posts)
+    if 'email' not in session:
+        return render_template('menus.html', title="5 Minutes", posts=posts)
+    else:
+        user = User.query.filter_by(nickname = session['nick']).first()
+        multiselect_str = user.interests
+        if multiselect_str == '':
+            return render_template('menus.html', title="5 Minutes", posts=posts)
+        else:
+            multiselect = multiselect_str.split(' ')
+            new_posts = []
+            for post in posts:
+                if post.sub_category in multiselect:
+                    new_posts.append(post)
+            render_template('menus.html', title="5 Minutes", posts=new_posts)
 
 @page.route('/15menu')
 def fifteen_menu():
