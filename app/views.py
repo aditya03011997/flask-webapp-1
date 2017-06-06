@@ -1,5 +1,4 @@
 from flask import make_response, url_for, request, render_template, flash, session, redirect,session,jsonify
-from flask_oauth import OAuth
 from .forms import ChangeNickForm, ChangePasswordForm, SearchForm, SignupForm, SigninForm, PostForm, RecoveryForm, NewpasswordForm
 from app import authomatic, page, db, models
 from .models import Bookmark, User, Post, Like
@@ -145,25 +144,25 @@ def signin():
         return render_template('signin.html', title="Sign In", form=form)
     
 @page.route('/api/v2/register/<username>/<email>/<passwd>', methods = ['POST'])
-    def nayaa_user(username, email, passwd):    
-        if User.query.filter_by(username = username).first() is not None:
-            abort(400) # existing user
-        newuser = User(username, email, passwd)
-        db.session.add(newuser)
-        db.session.commit()
-        db.session.add(newuser.follow(newuser))
-        db.session.commit()
-        newuser.make_dirs()
-        return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)} 
+def nayaa_user(username, email, passwd):    
+    if User.query.filter_by(username = username).first() is not None:
+        abort(400) # existing user
+    newuser = User(username, email, passwd)
+    db.session.add(newuser)
+    db.session.commit()
+    db.session.add(newuser.follow(newuser))
+    db.session.commit()
+    newuser.make_dirs()
+    return jsonify({ 'username': user.username }), 201, {'Location': url_for('get_user', id = user.id, _external = True)} 
 
-@app.route('/api/login_hua/<username>/<pwd_hash>', methods=['POST'])
-def login(username,pwd_hash):
-    user = User.query.filter_by(username=username).first()
-    if user and user.check_pwd_hash(user.password, pwd_hash):
-        status = True
-    else:
-        status = False
-    return jsonify({'result': status})
+#@page.route('/api/v2/login_hua/<username>/<pwd_hash>', methods=['POST'])
+#def login(username,pwd_hash):
+#    user = User.query.filter_by(nickname=username).first()
+#    if user and user.check_pwd_hash(user.password, pwd_hash):
+#        status = True
+#    else:
+#        status = False
+#    return jsonify({'result': status})
 
 @page.route('/signout')
 def signout():
