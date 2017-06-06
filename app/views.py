@@ -529,4 +529,4 @@ def validate_choices():
             db.session.commit()
             return redirect(url_for('profile', nick=session['nick']))
         elif request.method == 'GET':
-            return render_template('that_form_jo_banaa_nahi', form=form)
+            return render_template('user_interest_form.html')

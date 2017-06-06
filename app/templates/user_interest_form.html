@@ -2,17 +2,17 @@
 <head>
 <title> User Interests form </title>
 <body>
-<select multiple id="mymultiselect" name="mymultiselect">         
+<form action="{{ url_for('yourinterests') }}" method="post" name="mymultiselect">
+    <select multiple id="mymultiselect" name="mymultiselect">         
         <option value="1">Technology</option>       
         <option value="2">Business & Finance</option>       
         <option value="3">Lifehacks</option>
         <option value="4">Soft Skills</option>
         <option value="5">DS & Algo </option>
-        option value="6"> Machine Learning & AI </option>
-
-</select>
+        <option value="6"> Machine Learning & AI </option>
+    </select>
+    <button type="submit" name="submit" value="submit">Submit</button>
+</form>
 </head>
 </body>
 </html>
-
-
