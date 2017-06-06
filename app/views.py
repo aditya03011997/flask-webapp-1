@@ -542,3 +542,5 @@ def validate_choices():
             return redirect(url_for('profile', nick=session['nick']))
         elif request.method == 'GET':
             return render_template('user_interest_form.html')
+        
+        
