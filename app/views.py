@@ -516,18 +516,58 @@ def five_menu():
 @page.route('/15menu')
 def fifteen_menu():
     posts = Post.query.filter_by(category = "15 Minutes").all()
-    return render_template('menus.html', title="15 Minutes", posts=posts)
+    if 'email' not in session:
+        return render_template('menus.html', title="15 Minutes", posts=posts)
+    else:
+        user=User.query.filter_by(nickname=session['nick']).first()
+        multiselect_str=user.interests
+        if multiselect_str='':
+            return render_template('menus.html', title="15 Minutes" , posts=posts)
+        else:
+            multiselect=multiselect_str.split('')
+            new_posts=[]
+            for post in posts:
+                if post.sub_categpry in multiselect:
+                    new_posts.append(post)
+            render_template("menus.html", title="15 Minutes", posts=new_posts)
 
 @page.route('/30menu')
 def thirty_menu():
     posts = Post.query.filter_by(category = "30 Minutes").all()
-    return render_template('menus.html', title="30 Minutes")
-
+    if "email" not in session:
+        return render_template('menus.html', title="30 Minutes")
+    else:
+        user=User.query.filter_by(nickname=session['nick']).first()
+        multiselect_str=user.interests
+        if multiselect_str='':
+            return render_template('menus.html', title="30 Minutes", posts=posts)
+        else:
+            multiselect=multiselect_str.split('')
+            new_posts=[]
+            for post in posts:
+                if post.sub_category in multiselect:
+                    new_posts.append(post)
+            return render_template("menus.html", title="30 Minutes", posts=new_posts)
+        
+            
 @page.route('/imenu')
 def imenu():
     posts = Post.query.filter_by(category = "Long").all()
-    return render_template('menus.html', title="Time is no Barrier")
-
+    if "email" not in session:
+        return render_template('menus.html', title="Time is no Barrier")
+    else:
+        user=User.query.filter_by(nickname=session['nick']).first()
+        multiselect_str=user.interests
+        if multiselect_str='':
+            return render_template("menus.html",title= "Long", posts=new_posts)
+        else:
+            multiselect=multiselect_str.split('')
+            new_posts=[]
+            for post in posts:
+                if post.sub_category in multiselect:
+                    new_posts.append(post)
+            return render_template("menus.html", title="Long", posts=new_posts)
+            
 @page.route('/yourinterests',methods=['GET','POST'])
 def validate_choices():
     if 'email' not in session:
