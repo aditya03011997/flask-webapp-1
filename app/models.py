@@ -72,7 +72,7 @@ class User(db.Model):
         return check_password_hash(self.pwdhash, password)
 
     def make_dirs(self):
-        os.makedirs('/home/manan/Programs/EduTech/app/static/userdata/'+str(self.nickname), exist_ok=True)
+        os.makedirs('/home/Manan/Programs/EduTech/app/static/userdata/'+str(self.nickname), exist_ok=True)
 
     def avatar(self):
         for root, dirs, files in os.walk("/home/manan/Programs/EduTech/app/static/userdata/" + str(self.nickname)):
@@ -124,6 +124,8 @@ class Bookmark(db.Model):
     def __repr__(self):
         return '%s, %s' %(self.post_id, self.user_id)
     
+    
+
     
 
     
