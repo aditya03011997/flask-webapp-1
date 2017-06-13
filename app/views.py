@@ -41,7 +41,7 @@ def send_mail_reg(address, user):
     server.starttls()
     server.login("EMAIL", "PASS")
     msg = "click this link to confirm: " + str(get_activation_link(user)) 
-    server.sendmail("aitya03011997@gmail.com", address, msg)
+    server.sendmail("aditya03011997@gmail.com", address, msg)
     server.quit()
 
 def send_mail_pass(address, user):
@@ -57,7 +57,7 @@ def send_mail_report(post):
     server.starttls()
     server.login("EMAIL1", "PASS")
     msg = "This post was reported: " + str(post.link)
-    server.sendmail(address,aditya03011997@gmail.com, msg)
+    server.sendmail(address,"aditya03011997@gmail.com", msg)
     server.quit()
 
 @page.route('/')
