@@ -39,7 +39,7 @@ def get_change_link(user):
 def send_mail_reg(address, user):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("EMAIL", "PASS")
+    server.login("aditya03011997@gmail.com", "adityaandleonardo")
     msg = "click this link to confirm: " + str(get_activation_link(user)) 
     server.sendmail("aditya03011997@gmail.com", address, msg)
     server.quit()
@@ -47,7 +47,7 @@ def send_mail_reg(address, user):
 def send_mail_pass(address, user):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("EMAIL", "PASS")
+    server.login("aditya03011997@gmail.com", "adityaandleonardo")
     msg = "click this link to change: " + str(get_change_link(user))
     server.sendmail("aditya03011997@gmail.com", address, msg)
     server.quit()
@@ -55,7 +55,7 @@ def send_mail_pass(address, user):
 def send_mail_report(post):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login("EMAIL1", "PASS")
+    server.login("aditya03011997@gmail.com", "adityaandleonardo")
     msg = "This post was reported: " + str(post.link)
     server.sendmail(address,"aditya03011997@gmail.com", msg)
     server.quit()
