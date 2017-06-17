@@ -205,8 +205,8 @@ def newpost():
             flash("Post Successfull")
             return redirect(url_for('profile', nick=session['nick']))
 
-    elif request.method == 'GET':
-        return render_template('newpost.html', title="New Post", form=form)
+        elif request.method == 'GET':
+            return render_template('newpost.html', title="New Post", form=form)
 
 @page.route('/changeprofile', methods=['GET','POST'])
 def changeprofile():
