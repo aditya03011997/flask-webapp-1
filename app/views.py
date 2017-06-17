@@ -180,22 +180,25 @@ def newpost():
 
     if 'email' not in session:
         return redirect(url_for('signin'))
-
-    if request.method == 'POST':
-        if form.validate() == False:
-            return render_template('newpost.html', title="New Post", form=form)
-        else:
-            cur_user = User.query.filter_by(email = session['email']).first()
-            link = form.body.data
-            article = Article(url=link)
-            article.download()
-            article.parse()
-            post_body = article.text[:160]+'...'
-            post_title = article.title
-            if len(str(article.top_image)) > 0:
-                img_addr = str(article.top_image)
+    
+    if session['nick']=="Adi":
+        
+    
+        if request.method == 'POST':
+            if form.validate() == False:
+                return render_template('newpost.html', title="New Post", form=form)
             else:
-                img_addr = '/static/userdata/avatar.png'
+                cur_user = User.query.filter_by(email = session['email']).first()
+                link = form.body.data
+                article = Article(url=link)
+                article.download()
+                article.parse()
+                post_body = article.text[:160]+'...'
+                post_title = article.title
+                if len(str(article.top_image)) > 0:
+                img_addr = str(article.top_image)
+        else:
+            img_addr = '/static/userdata/avatar.png'
             new = models.Post(title=post_title, body=post_body, timestamp=datetime.datetime.utcnow(), link=link, image=img_addr, likes=0, category=form.category.data, author=cur_user)
             db.session.add(new)
             db.session.commit()
