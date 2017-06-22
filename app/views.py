@@ -586,4 +586,14 @@ def validate_choices():
         elif request.method == 'GET':
             return render_template('user_interest_form.html')
         
+@page.route('/api/avatar/<user_nick>',methods=['GET','POST'])
+def prof_img():
+    user = User.query(nick = user_nick).first()                        
+    return user.avatar()
+
+
+
+
+    
+
         
