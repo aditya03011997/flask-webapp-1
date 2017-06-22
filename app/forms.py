@@ -57,8 +57,8 @@ class PostForm(Form):
     body = StringField("Body", [validators.Required("Body cannot be empty")])
     myChoices = [('5 Minutes', '5 Minutes'), ('15 Minutes', '15 Minutes'), ('30 Minutes', '30 Minutes'), ('Long', 'Long')]
     category = SelectField(label='Category', coerce=str, choices = myChoices)
-#    selected_ones=[('Technology','Technology'),('Business & Finance', 'Business & Finance'),('Lifehacks','Lifehacks'),('Softskills','Softskills'),('DS & Algo','DS & Algo'),('Machine Learning & AI','Machine Learning & AI')]
- #   choices = SelectField(label='Category', choices=[selected_ones], coerce=str)
+    selected_ones=[('Technology','Technology'),('Business & Finance', 'Business & Finance'),('Lifehacks','Lifehacks'),('Softskills','Softskills'),('DS & Algo','DS & Algo'),('Machine Learning & AI','Machine Learning & AI')]
+    choices = SelectField(label='Category', choices=[selected_ones], coerce=str)
     submit = SubmitField("Post")
 
     def validate(self):
