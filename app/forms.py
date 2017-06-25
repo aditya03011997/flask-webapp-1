@@ -59,7 +59,10 @@ class PostForm(Form):
     category = SelectField(label='Category', coerce=str, choices = myChoices)
     selected_ones=[('Technology','Technology'),('Business & Finance', 'Business & Finance'),('Lifehacks','Lifehacks'),('Softskills','Softskills'),('DS & Algo','DS & Algo'),('Machine Learning & AI','Machine Learning & AI')]
     choices = SelectField(label='Category', choices=[selected_ones], coerce=str)
+    types = [('Articles','Articles'),('Video','Video'),('Audio','Audio')]
+    selected_type = SelectField(label='Types',selected_type=[types],coerce=str)
     submit = SubmitField("Post")
+    
 
     def validate(self):
         if not Form.validate(self):
