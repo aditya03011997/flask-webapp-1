@@ -25,6 +25,13 @@
                 <span style="color:red">[{{error}}] </span>
             {% endfor %}
         </p>
+        <p>
+            Choices:<br>
+            {{form.choices}}<br>
+            {% for error in form.choices.errors %}
+            <span style="color: red">[{{error}}] </span>
+            { % endfor %}
+        </p>
             <p><input type="submit" value="Post"></p>
         </form>
     </div>
