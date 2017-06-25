@@ -126,6 +126,7 @@ class Bookmark(db.Model):
     
     
 class Categ(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(500)) 
     name =  db.Column(db.String(300))
     
