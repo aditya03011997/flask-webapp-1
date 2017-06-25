@@ -125,6 +125,12 @@ class Bookmark(db.Model):
         return '%s, %s' %(self.post_id, self.user_id)
     
     
+class Categ(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    email_id = db.Column(db.Integer)
+    image_url = db.Column(db.String(500)) 
+    name =  db.Column(db.String(300))
+    
 
     
 
