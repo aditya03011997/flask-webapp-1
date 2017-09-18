@@ -591,7 +591,24 @@ def prof_img():
     user = User.query(nick = user_nick).first()                        
     return user.avatar()
 
+@page.route('/learn',methods = ['GET' , 'POST'])
+    def learningpart():
+        if 'email' not in session:
+            return redirect(url_for('signin'))
+        else:
+            if request.method == 'GET':
+                return redirect(url_for('learn'))
+   
+@page.route('/explore,methods = ['GET' , 'POST'])
+    def exploringpart():
+            if 'email' not in session:
+                return redirect(url_for('signin'))
+            else:
+                if request.method == 'GET':
+                    return redirect(url_for('explore'))
+            
 
+                
 
 
     
